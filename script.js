@@ -6,7 +6,6 @@ const remainingGuess = document.querySelector(".remainingGuess");
 const previousGuess = document.querySelector(".previousGuess");
 const start = document.querySelector(".start");
 
-let attempts = 10;
 let previousGuesses = [];
 let numGuess = 0;
 let playGame = true;
@@ -28,14 +27,13 @@ function validateInput(guess) {
     input.value = "";
   } else {
     numGuess++;
-    previousGuesses.push(guess);
 
-    updateGuess();
-
-    if (numGuess >= 10) {
+    if (numGuess > 10) {
       displayMessage(`Game Over!!! Random Number is ${randomNumber}`);
+      updateGuess();
       endGame();
     } else {
+      previousGuesses.push(guess);
       checkGuess(guess);
       updateGuess();
     }
@@ -60,7 +58,7 @@ function displayMessage(msg) {
 function updateGuess() {
   previousGuess.innerText = `Previous Guesses : ${previousGuesses.toString()}`;
   remainingGuess.innerText = `Remaining Guesses : ${
-    totalGuessesAvailable - numGuess
+    totalGuessesAvailable - numGuess < 0 ? 0 : totalGuessesAvailable - numGuess
   }`;
 }
 
